@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Дъявол — HIPERNETSKIY</title>
+<style>
+:root{--bg:#07060a;--fg:#dbeef0;--accent:#00ffa3;--danger:#ff3b6b;--muted:#6b7280;--blue:#3ba9ff}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial}
+body{background:radial-gradient(1200px 600px at 10% 10%, rgba(0,255,163,0.03), transparent), linear-gradient(180deg,#050507 0%, #0b0b10 60%);color:var(--fg);overflow:auto}
+.container{max-width:1100px;margin:40px auto;padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));box-shadow:0 10px 50px rgba(0,0,0,0.6);border:1px solid rgba(0,255,163,0.06);position:relative;}
+.header{display:flex;gap:20px;align-items:center}
+.logo{width:120px;height:120px;border-radius:12px;overflow:hidden;flex:0 0 120px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+.logo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.05) contrast(1.05) saturate(.8) hue-rotate(-10deg)}
+.title{flex:1}
+.h1{font-size:clamp(20px,4vw,42px);margin:0;letter-spacing:0.02em;line-height:1.02}
+.h1 .glitch{position:relative;display:inline-block}
+.h1 .glitch:before,.h1 .glitch:after{content:attr(data-text);position:absolute;left:0;top:0;mix-blend-mode:screen;pointer-events:none}
+.h1 .glitch:before{color:var(--danger);transform:translate(3px,0);opacity:.8}
+.h1 .glitch:after{color:var(--accent);transform:translate(-3px,0);opacity:.8}
+.subtitle{color:var(--muted);margin-top:6px;font-size:14px}
+.meta{display:flex;gap:12px;margin-top:12px}
+.meta .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-size:13px;color:var(--muted)}
+.content{display:grid;grid-template-columns:1fr 360px;gap:22px;margin-top:24px}
+.article{padding:18px;background:linear-gradient(180deg,rgba(0,0,0,0.03),transparent);border-radius:10px;border:1px solid rgba(0,0,0,0.2)}
+.lead{font-size:16px;line-height:1.6;color:#e6f9f0}
+.box{margin-top:18px;padding:12px;border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.03));border:1px dashed rgba(0,255,163,0.06);}
+.aside{padding:18px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),rgba(0,0,0,0.02));border:1px solid rgba(255,255,255,0.02)}
+.aside h3{margin:0 0 8px 0;font-size:14px}
+.stat{display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;background:linear-gradient(90deg,rgba(255,255,255,0.01),transparent);margin-top:8px}
+.stat .dot{width:12px;height:12px;border-radius:50%}
+.dot.green{background:linear-gradient(180deg,#00ffa3,#00c48a)}
+.dot.red{background:linear-gradient(180deg,#ff6b87,#ff3b6b)}
+.foot{margin-top:22px;padding-top:14px;border-top:1px dashed rgba(255,255,255,0.03);display:flex;justify-content:space-between;align-items:center}
+.btn{display:inline-block;padding:10px 14px;border-radius:10px;font-weight:700;text-decoration:none;border:0;transition:all .3s ease}
+.btn-write{background:linear-gradient(180deg,var(--accent),#00c48a);color:#001;position:relative;}
+.btn-write:hover{background:linear-gradient(180deg,var(--danger),#a80028);color:#fff;}
+.btn-write:hover::after{content:"Вход недоступен, зайдите на оф. сайт WPLUG!";position:absolute;top:110%;left:0;width:max-content;background:rgba(0,0,0,0.8);color:#ff6b87;font-size:12px;padding:6px 8px;border-radius:6px;}
+.btn-rep{background:linear-gradient(180deg,var(--blue),#2679ff);color:#fff;display:flex;flex-direction:column;align-items:center;}
+.btn-rep small{font-size:11px;color:#bcdcff;margin-top:2px}
+.eerie{position:absolute;right:-80px;top:-80px;opacity:.06;transform:rotate(18deg);filter:blur(0.6px)}
+.glitchy-line{height:2px;background:linear-gradient(90deg,var(--accent),transparent);opacity:.15;margin:16px 0}
+
+.legend-btn{display:inline-block;padding:14px 20px;border-radius:14px;background:linear-gradient(90deg,#00ffd1,#3ba9ff);color:#001;font-weight:900;letter-spacing:0.02em;cursor:pointer;box-shadow:0 8px 40px rgba(0,170,255,0.12),0 0 18px rgba(0,255,163,0.06);border:1px solid rgba(255,255,255,0.06);font-size:16px;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}
+.legend-btn:hover{transform:translateY(-6px);filter:brightness(1.08);box-shadow:0 26px 80px rgba(0,170,255,0.18),0 0 40px rgba(0,255,163,0.12)}
+.legend-panel{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;visibility:hidden;opacity:0;transition:opacity .45s ease,visibility .45s;z-index:1200;pointer-events:none}
+.legend-panel[aria-hidden="false"]{visibility:visible;opacity:1;pointer-events:auto}
+.legend-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.32) contrast(.9) saturate(.7);transform:scale(1.02);opacity:0;transition:opacity .6s ease}
+.legend-panel[aria-hidden="false"] .legend-bg{opacity:1}
+.legend-content{position:relative;max-width:1000px;width:92%;margin:36px;border-radius:14px;overflow:hidden;transform:translateY(20px) scale(.985);transition:transform .45s cubic-bezier(.2,.9,.2,1);}
+.legend-panel[aria-hidden="false"] .legend-content{transform:translateY(0) scale(1)}
+.legend-text{padding:28px;max-height:70vh;overflow:auto;background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.6));color:#fff;font-size:16px;line-height:1.6}
+.legend-close{position:absolute;right:12px;top:12px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.04);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer}
+body.legend-open{overflow:hidden}
+
+.keyword{color:var(--blue);cursor:pointer;text-decoration:underline;}
+.info-panel{position:fixed;inset:0;display:flex;align-items:flex-start;justify-content:center;visibility:hidden;opacity:0;transition:opacity .45s ease,visibility .45s;z-index:1300;pointer-events:none}
+.info-panel[aria-hidden="false"]{visibility:visible;opacity:1;pointer-events:auto}
+.info-bg{position:absolute;inset:0;background:url('image3.png') center/cover no-repeat;filter:brightness(.35);opacity:0;transition:opacity .6s ease}
+.info-panel[aria-hidden="false"] .info-bg{opacity:1}
+.info-content{position:relative;max-width:800px;width:90%;margin:30px;border-radius:12px;overflow:hidden;transform:translateY(20px) scale(.985);transition:transform .45s cubic-bezier(.2,.9,.2,1);background:rgba(0,0,0,0.65);color:#fff;padding:20px;}
+.info-panel[aria-hidden="false"] .info-content{transform:translateY(0) scale(1)}
+.info-close{position:absolute;right:10px;top:10px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.04);color:#fff;padding:5px 8px;border-radius:6px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo">
+      <img src="image.png" alt="image"/>
+    </div>
+    <div class="title">
+      <h1 class="h1"><span class="glitch" data-text="Дъявол — HIPERNETSKIY">Дъявол — HIPERNETSKIY</span></h1>
+      <div class="subtitle">HIPERNETSKIY получил это прозвище от большинства игроков вселенной WPLUG. Тот с кем нельзя заключать сделки.</div>
+      <div class="meta">
+        <div class="pill">Является основателем: HIPERCORP, HIPNODIP, HIPERHUB</div>
+        <div class="pill">Дата: <span id="date">—</span></div>
+        <div class="pill">Статус: <strong style="color:var(--accent)">Незрим</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="article">
+      <p class="lead">Дъявол — прозвище HIPERNETSKIY полученное от большинства игроков вселенной WPLUG.</p>
+
+      <div class="box">
+        <h3>Его правила</h3>
+        <ul>
+          <li>Кажись простачком.</li>
+          <li>Не выделяйся!.</li>
+          <li>Не помогай без выгоды</li>
+          <li>Заставь думать, что друг. Помогай, но редко.</li>
+        </ul>
+      </div>
+
+      <div class="glitchy-line"></div>
+
+      <div class="box">
+        <button id="legendToggle" class="legend-btn">Легенда</button>
+      </div>
+
+      <div id="legendPanel" class="legend-panel" aria-hidden="true">
+        <div class="legend-bg" style="background-image:url('image2.png')"></div>
+        <div class="legend-content">
+          <button id="legendClose" class="legend-close">✕</button>
+          <div class="legend-text">
+            <p>Никто не знал, кто такой Хипер и откуда он появился. Его первое появление совпало с крупномасштабной войной между тремя планетами. Конфликт разрастался на этих мирах: в нём участвовали армии высокоразвитых цивилизаций и множество боевых машин. В разгар войны внезапно возник Хипер — загадочная фигура с огромной силой. Хипер использовал неведомую могущественную магию и высокоразвитые технологии, чтобы установить доминирование над роботами, дронами, андроидами, демонами и другими существами. Хипер подчинил себе многочисленные армии и установил контроль над всеми сторонами конфликта, используя как технократические установки, так и оккультные ритуалы. Его могущество было абсолютным и прекратило даже самую ожесточённую битву. Благодаря вмешательству Хипера между планетами был заключён мир. Он организовал переговоры и добился соглашения о прекращении огня. После этого Хипер объявил о новом порядке: бывшие планеты получили новые названия — <span class="keyword" data-info="hypernia">Хиперния</span>, <span class="keyword" data-info="mihmir">Михмир</span> и <span class="keyword" data-info="hipmir">Хипмир</span>. Эти переименования обозначили начало новой эпохи сотрудничества и стабильности. Под его руководством завершился многолетний военный конфликт, и планеты вступили в длительный период мира. Хипер основал могущественную корпорацию <span class="keyword" data-info="hipercorp">HIPERCORP</span>, в которой сосредоточены магия, наука и политика. Эта организация стала центром власти и знаний во вселенной. В рамках HIPERCORP была создана единая система обмена ресурсами и информацией, объединяющая технологические разработки и магические традиции под единым руководством. Корпорация управляет политическими, экономическими и научными процессами, обеспечивая устойчивость и развитие миров, входящих в её сферу влияния. После окончания войны Хипер заключил союз с <span class="keyword" data-info="federation">Галактической Федерацией</span>. По условиям договора он обязался не развязывать новые конфликты и воздерживаться от агрессии. В то же время он гарантировал, что при любой внешней угрозе применит всю свою мощь для обороны Федерации и её союзников. Этот союз укрепил мир во Вселенной: Галактическая Федерация признала HIPERCORP участником общей системы безопасности. Благодаря договору могущество Хипера стало инструментом защиты, а не разрушения, что обеспечило соблюдение нового миропорядка.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-panel" id="infoPanel" aria-hidden="true">
+        <div class="info-bg"></div>
+        <div class="info-content">
+          <button class="info-close" id="infoClose">✕</button>
+          <div id="infoText">—</div>
+        </div>
+      </div>
+
+      <div class="glitchy-line"></div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px">
+        <a class="btn btn-write" href="#">Написать в профиль</a>
+        <a class="btn btn-rep" href="#">Положительная репутация!<small>(Имеет мирное государство)</small></a>
+      </div>
+
+    </div>
+
+    <aside class="aside"> 
+	Донат инвентарь: <span style="color: red;">СКРЫТ!</span>
+	</aside>
+  </div>
+
+  <div class="foot"><small>Страница скачана с оф. сайта WPLUG</small> © WPLUGTEAM - 2020</div>
+
+  <img class="eerie" src="/mnt/data/3de2f991-55ca-4895-aea7-9ed01ec6df7e.png" width="420" alt="bg"/>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const dateEl = document.getElementById('date');
+  if(dateEl) dateEl.textContent = new Date().toLocaleString();
+
+  const toggle = document.getElementById('legendToggle');
+  const panel = document.getElementById('legendPanel');
+  const closeBtn = document.getElementById('legendClose');
+  function openPanel(){panel.setAttribute('aria-hidden','false');document.body.classList.add('legend-open');}
+  function closePanel(){panel.setAttribute('aria-hidden','true');document.body.classList.remove('legend-open');}
+  toggle.addEventListener('click', openPanel);
+  closeBtn.addEventListener('click', closePanel);
+  panel.addEventListener('click', e=>{if(e.target===panel) closePanel();});
+
+  const infoPanel=document.getElementById('infoPanel');
+  const infoText=document.getElementById('infoText');
+  const infoClose=document.getElementById('infoClose');
+  const texts={
+    hypernia:"Хиперния — планета-столп новой эпохи, где магические традиции переплелись с передовыми технологиями. Центр исследований HIPERCORP, источник энергоресурсов и артефактов, задающих направление развития цивилизаций.",
+    mihmir:"Михмир — суровая планета-кузня, где рождаются оружие и боевые машины. Её фабрики и арсеналы снабжают множество армий; культура мира пропитана воинской дисциплиной и ремесленной жесткостью.",
+    hipmir:"Хипмир — мир-архив, где собраны древние руны, хроники и запрещённые тома. Здесь хранятся секретные исследования и библиотека магико-технологических достижений, доступ к которой строго контролируется.",
+    hipercorp:"HIPERCORP — корпорация-монополист, удерживающая второе место в галактике по военной мощи после Галактической Федерации. Основное направление — производство и продажа вооружения, а также массовый выпуск боевых дронов, использующих как передовые технологии, так и магические усилители.",
+    federation:"Галактическая Федерация (англ. Galactic Federation) — крупнейшая межгалактическая организация, которая контролирует большую часть области вселенной. Является сильнейшей организацией. Под управлением более 200.000+ планет"
+  };
+  document.querySelectorAll('.keyword').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const key=el.getAttribute('data-info');
+      infoText.textContent=texts[key]||"Нет данных.";
+      infoPanel.setAttribute('aria-hidden','false');
+    });
+  });
+  infoClose.addEventListener('click',()=>{infoPanel.setAttribute('aria-hidden','true');});
+  infoPanel.addEventListener('click',e=>{if(e.target===infoPanel) infoPanel.setAttribute('aria-hidden','true');});
+});
+</script>
+</body>
+</html>
