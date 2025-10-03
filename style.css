@@ -1,0 +1,323 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Crimson Text', serif;
+    background: #000;
+    color: #e0e0e0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Фоновое видео */
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    opacity: 0.3;
+}
+
+/* Затемнение для читаемости */
+.background-video::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 0, 0, 0.85) 0%,
+        rgba(20, 0, 40, 0.8) 25%,
+        rgba(0, 0, 0, 0.9) 50%,
+        rgba(40, 0, 20, 0.8) 75%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: -1;
+}
+
+/* Анимированные частицы */
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.particles::before,
+.particles::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.particles::before {
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+    box-shadow: 
+        100px 200px 0 #ff6b6b,
+        300px 100px 0 #ff6b6b,
+        500px 300px 0 #ff6b6b,
+        700px 150px 0 #ff6b6b,
+        900px 250px 0 #ff6b6b;
+}
+
+.particles::after {
+    top: 60%;
+    left: 80%;
+    animation-delay: 3s;
+    box-shadow: 
+        -200px 100px 0 #ff6b6b,
+        -400px 200px 0 #ff6b6b,
+        -600px 50px 0 #ff6b6b,
+        -800px 150px 0 #ff6b6b,
+        -1000px 300px 0 #ff6b6b;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 0;
+    position: relative;
+}
+
+.title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: #ff6b6b;
+    text-shadow: 
+        0 0 10px #ff6b6b,
+        0 0 20px #ff6b6b,
+        0 0 30px #ff6b6b,
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 
+            0 0 10px #ff6b6b,
+            0 0 20px #ff6b6b,
+            0 0 30px #ff6b6b,
+            2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    to {
+        text-shadow: 
+            0 0 20px #ff6b6b,
+            0 0 30px #ff6b6b,
+            0 0 40px #ff6b6b,
+            2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+}
+
+.content {
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid #ff6b6b;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 
+        0 0 30px rgba(255, 107, 107, 0.3),
+        inset 0 0 30px rgba(255, 107, 107, 0.1);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.content::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff6b6b, #8b0000, #ff6b6b, #8b0000);
+    border-radius: 15px;
+    z-index: -1;
+    animation: borderGlow 4s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.text-overlay {
+    position: relative;
+    z-index: 2;
+}
+
+.text-overlay p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    text-align: justify;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    color: #f0f0f0;
+}
+
+.text-overlay h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: #C0C0C0;
+    margin: 30px 0 20px 0;
+    text-shadow: 0 0 10px #ff6b6b;
+    text-align: center;
+}
+
+.heroes-list {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0;
+}
+
+.heroes-list li {
+    font-size: 1.1rem;
+    margin: 15px 0;
+    padding: 10px 20px;
+    background: rgba(255, 107, 107, 0.1);
+    border-left: 4px solid #ff6b6b;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.heroes-list li:hover {
+    background: rgba(255, 107, 107, 0.2);
+    transform: translateX(10px);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+}
+
+.heroes-list li strong {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+.final-text {
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #ff6b6b;
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 107, 107, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    text-shadow: 0 0 10px #ff6b6b;
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .content {
+        padding: 20px;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .text-overlay p {
+        font-size: 1rem;
+    }
+    
+    .text-overlay h2 {
+        font-size: 1.5rem;
+    }
+    
+    .heroes-list li {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+    
+    .final-text {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding: 15px;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+    }
+    
+    .text-overlay p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .heroes-list li {
+        font-size: 0.95rem;
+        padding: 6px 12px;
+    }
+}
+
+/* Дополнительные эффекты */
+.content:hover {
+    box-shadow: 
+        0 0 40px rgba(255, 107, 107, 0.4),
+        inset 0 0 40px rgba(255, 107, 107, 0.15);
+}
+
+/* Скролл-бар */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff6b6b, #8b0000);
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #ff8a8a, #a00000);
+}
